@@ -15,7 +15,8 @@ type CommandName =  CMove
                     | CYank
                     | CDelete
                     | CQuit
-                    //| SDone
+                    | CPutBefore
+                    | CPutAfter
                     //| SAddedPlanned
                     //| SAddedInProgress
                     //| SAddedDone

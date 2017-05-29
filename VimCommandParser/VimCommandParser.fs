@@ -26,16 +26,20 @@ let buildCommandCommandMovementArgument ((command, movement), arg) = {Command.Re
 
 let moveCommandParser = movementsParser |>> buildCommandMovement
 let deleteLineCommandParser = pint32 .>>. stringReturn "dd" CDeleteLine |>> buildCommandCountName
-//let deleteCommandParser = stringReturn "d" CDelete .>>. movementsParser .>>. pchar  |>> buildCommandCommandMovementArgument // TODO - temp
+let deleteCommandParser = stringReturn "d" CDelete .>>. movementsParser .>>. pstring "p"  |>> buildCommandCommandMovementArgument // TODO - temp
 let yankCommandParser = stringReturn "y" CYank .>>. movementsParser |>> buildCommandCommandMovement 
 let quitCommandParser = stringReturn "ZZ" CQuit |>> buildCommandName
+let putBeforeCommandParser = stringReturn "P" CPutBefore |>> buildCommandName
+let putAfterCommandParser = stringReturn "P" CPutAfter |>> buildCommandName
 
 let commandParser = 
     moveCommandParser
     <|> deleteLineCommandParser 
-    //<|> deleteCommandParser 
+    <|> deleteCommandParser 
     <|> yankCommandParser 
     <|> quitCommandParser
+    <|> putBeforeCommandParser
+    <|> putAfterCommandParser
 
 let commandsParser = many commandParser
 // 
@@ -54,7 +58,7 @@ let parseTestString _ =
     //test deleteLineCommand "2dd"
     //test deleteCommand "dtp"
     //test yankCommand "yW"
-    test commandsParser "2ddyWjjlj2ddZZ"
+    test commandsParser "2ddyWjjPldtpj2ddZZ"
 
         //2ddyWjjPldtpj2ddZZ
         //2dd yW jj P l dtp j 2dd ZZ
