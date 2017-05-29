@@ -2,11 +2,16 @@
 
 
 type MovementName = MNone
+                    | MLineDown
+                    | MLineUp
+                    | MCharacterLeft
+                    | MCharacterRight
                     | MWord
                     | MTill
                     | MEnd
 
-type CommandName = CDeleteLine
+type CommandName =  CMove
+                    |CDeleteLine
                     | CYank
                     | CDelete
                     | CQuit
